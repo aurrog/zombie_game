@@ -34,6 +34,10 @@ class Bullet(Sprite):
             self.x_b += self.bullet_speed
             self.rect.x = self.x_b
 
-
     def draw_bullet(self):
         pygame.draw.rect(self.screen, RED, self.rect)
+
+    def detect_collisions(self, walls):
+        hit_index = self.rect.collidelistall(walls)
+        if hit_index:
+            return 1

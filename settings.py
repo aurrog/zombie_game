@@ -57,8 +57,8 @@ zombie_spawn_massive = [(54, 749), (275, 749), (747, 752), (746, 672), (128, 661
 
 
 # guns
-knife_damage = 1
-knife_radius = 35
+knife_damage = 4
+knife_radius = 500
 player_hit_knife_cooldown = 60
 
 
@@ -69,10 +69,13 @@ zombie_img_down = pygame.transform.rotate(zombie_img_right, 270)
 zombie_img_left = pygame.transform.rotate(zombie_img_right, 180)
 
 player_with_knife_img_right = pygame.image.load('images/player_with_knife.png')
-player_with_knife_img_right.set_colorkey((255, 255, 255))
+# player_with_knife_img_right.set_colorkey((255, 255, 255))
 player_with_knife_img_left = pygame.transform.rotate(player_with_knife_img_right, 180)
 player_with_knife_img_up = pygame.transform.rotate(player_with_knife_img_right, 90)
 player_with_knife_img_down = pygame.transform.rotate(player_with_knife_img_right, 270)
+
+blood_spot_img = pygame.image.load('images/pixil-frame-0 (12).png')
+# blood_spot_img.set_colorkey((255, 255, 255))
 
 
 # sounds

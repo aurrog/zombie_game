@@ -66,14 +66,9 @@ class Player:
     #             knife_miss_sound.play()
     #             # return zombie.lives
 
-
-    def movement(self, zombie):
+    def movement(self):
         self.rect.center = self.x, self.y
         keys = pygame.key.get_pressed()
-        # self.x += player_speed
-        # if self.x > 770:
-        #     self.x = 770
-
         if keys[pygame.K_w]:
             self.turn = 'up'
             if self.y <= TILE / 4:
@@ -111,29 +106,25 @@ class Player:
         #     #     gun_sound = pygame.mixer.Sound('sounds/byistryiy-perezaryad-obreza.mp3')
         #     #     gun_sound.play()
 
-    def check_player_attack(self, zombie):
+    def check_player_attack(self, zombies):
         keys = pygame.key.get_pressed()
+        lives = [e.lives for e in zombies]
         if keys[pygame.K_SPACE]:
             if self.hit_cooldown >= player_hit_knife_cooldown:
                 self.hit_cooldown = 0
                 if self.select_gun == 'knife':
-                    if abs(zombie.x - self.x) < knife_radius and abs(zombie.y - self.y) < knife_radius:
-                        hit_sound.play()
-                        return zombie.lives-knife_damage
-                    else:
+                    for enemy in zombies:
+                        if abs(enemy.x - self.x) < knife_radius and abs(enemy.y - self.y) < knife_radius:
+                            hit_sound.play()
+                            enemy.lives -= knife_damage
+
+                    lives2 = [e.lives for e in zombies]
+                    if lives == lives2:
                         knife_miss_sound.play()
-        return zombie.lives
-    # def bullet_collision(self, walls, bullet):
-    #     collisions = pygame.sprite.groupcollide(self.bullets, walls, True, True)
-    #     if collisions != {}:
-    #         wp.text_map = self.return_wall_row(bullet_x, bullet_y)
-    #         wp.collision_walls = []
-    #         wp.world_map = set()
-    #         for j, row in enumerate(wp.text_map):
-    #             for i, char in enumerate(row):
-    #                 if char == '1':
-    #                     wp.collision_walls.append(pygame.Rect(i * TILE, j * TILE, TILE, TILE))
-    #                     wp.world_map.add((i * TILE, j * TILE))
+                if self.select_gun == 'shotgun':
+                    pass
+
+        return zombies
 
     def draw_bullets(self):
         for bullet in self.bullets.sprites():
