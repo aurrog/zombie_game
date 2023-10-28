@@ -11,14 +11,20 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 bullets = Group()
 player = classPerson.Player(screen, bullets)
-zombie = zombie.Zombie()
-
+zombie = zombie.Zombie(750, 750)
+mas = []
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            print(mas)
             exit()
-
-    player.movement(player)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mas.append(pygame.mouse.get_pos())
+    player.hit_cooldown += 1
+    zombie.bite_cooldown += 1
+    player.lives = zombie.check_bite(player)
+    player.movement(zombie)
+    zombie.lives = player.check_player_attack(zombie)
     zombie_x_last, zombie_y_last = zombie.pos
     zombie.x, zombie.y = bfs.character_movement(zombie, player)
     if zombie.x < zombie_x_last:

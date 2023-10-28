@@ -13,6 +13,8 @@ class Player:
         self.x, self.y = player_start_position
         self.side = player_side
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
+        self.select_gun = player_start_gun
+        self.hit_cooldown = player_hit_knife_cooldown
 
     @property
     def pos(self):
@@ -50,14 +52,22 @@ class Player:
         self.x += dx
         self.y += dy
 
-    def bullets_colision(self, walls):
+    def bullets_collision(self, walls):
         collision_walls = pygame.sprite.groupcollide(self.bullets, walls, True, True)
         if collision_walls:
             return 1
 
+    # def attack(self, zombie):
+    #     if self.select_gun == 'knife':
+    #         if abs(zombie.x-self.x) < knife_radius and abs(zombie.y-self.y) < knife_radius:
+    #             hit_sound.play()
+    #             # return zombie.lives-2
+    #         else:
+    #             knife_miss_sound.play()
+    #             # return zombie.lives
 
 
-    def movement(self, player):
+    def movement(self, zombie):
         self.rect.center = self.x, self.y
         keys = pygame.key.get_pressed()
         # self.x += player_speed
@@ -89,15 +99,30 @@ class Player:
             else:
                 self.detect_collisions(self.x - self.x + self.speed, 0)
 
-        if keys[pygame.K_SPACE]:
-            if len(self.bullets) != bullet_allowed:
-                # gun_sound = pygame.mixer.Sound('sounds/byistryiy-perezaryad-obreza.mp3')
-                # gun_sound.play()
-                new_bullet = Bullet(self.screen, player)
-                self.bullets.add(new_bullet)
-                gun_sound = pygame.mixer.Sound('../zombie_game/zombie_game/sounds/byistryiy-perezaryad-obreza.mp3')
-                gun_sound.play()
+        # if keys[pygame.K_SPACE]:
+        #     if self.hit_cooldown >= player_hit_knife_cooldown:
+        #         self.hit_cooldown = 0
+        #         self.attack(zombie)
+        #     # if len(self.bullets) != bullet_allowed:
+        #     #     # gun_sound = pygame.mixer.Sound('sounds/byistryiy-perezaryad-obreza.mp3')
+        #     #     # gun_sound.play()
+        #     #     new_bullet = Bullet(self.screen, player)
+        #     #     self.bullets.add(new_bullet)
+        #     #     gun_sound = pygame.mixer.Sound('sounds/byistryiy-perezaryad-obreza.mp3')
+        #     #     gun_sound.play()
 
+    def check_player_attack(self, zombie):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            if self.hit_cooldown >= player_hit_knife_cooldown:
+                self.hit_cooldown = 0
+                if self.select_gun == 'knife':
+                    if abs(zombie.x - self.x) < knife_radius and abs(zombie.y - self.y) < knife_radius:
+                        hit_sound.play()
+                        return zombie.lives-knife_damage
+                    else:
+                        knife_miss_sound.play()
+        return zombie.lives
     # def bullet_collision(self, walls, bullet):
     #     collisions = pygame.sprite.groupcollide(self.bullets, walls, True, True)
     #     if collisions != {}:
