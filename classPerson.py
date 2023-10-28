@@ -15,6 +15,7 @@ class Player:
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
         self.select_gun = player_start_gun
         self.hit_cooldown = player_hit_knife_cooldown
+        self.shotgun_fire_is_see = shotgun_fire_is_see
 
     @property
     def pos(self):
@@ -122,7 +123,24 @@ class Player:
                     if lives == lives2:
                         knife_miss_sound.play()
                 if self.select_gun == 'shotgun':
-                    pass
+                    shotgun_sound.play()
+                    self.shotgun_fire_is_see = 0
+                    self.hit_cooldown = 0
+                    for enemy in zombies:
+                        # if abs(enemy.x - self.x) < 200 and abs(enemy.y - self.y) < 40:
+                        #     enemy.lives -= 2
+                        if self.turn == 'left':
+                            if 0 < self.x - enemy.x < shotgun_range and abs(enemy.y - self.y) < shotgun_range_width:
+                                enemy.lives -= 2
+                        elif self.turn == 'right':
+                            if 0 < enemy.x - self.x < shotgun_range and abs(enemy.y - self.y) < shotgun_range_width:
+                                enemy.lives -= 2
+                        elif self.turn == 'up':
+                            if abs(enemy.x - self.x) < shotgun_range_width and 0 < self.y - enemy.y < shotgun_range:
+                                enemy.lives -= 2
+                        elif self.turn == 'down':
+                            if abs(enemy.x - self.x) < shotgun_range_width and 0 < enemy.y - self.y < shotgun_range:
+                                enemy.lives -= 2
 
         return zombies
 

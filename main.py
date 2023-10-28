@@ -7,14 +7,13 @@ import zombie
 import bfs
 import random
 
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 bullets = Group()
 player = classPerson.Player(screen, bullets)
 zombies = []
 died = []
-for z in range(10):
+for z in range(5):
     pos = random.choice(zombie_spawn_massive)
     zombies.append(zombie.Zombie(pos[0], pos[1]))
 
@@ -24,6 +23,7 @@ while True:
             exit()
 
     player.hit_cooldown += 1
+    player.shotgun_fire_is_see += 1
     for enemy in zombies:
         enemy.bite_cooldown += 1
         player.lives = enemy.check_bite(player)
@@ -44,7 +44,7 @@ while True:
     drawing.drawing(screen, map.world_map, player, zombies, bullets, died)
     i = -1
     for z in zombies:
-        i+=1
+        i += 1
         if not z.is_alive:
             died.append(z.pos)
             zombies.pop(i)

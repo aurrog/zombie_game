@@ -21,24 +21,49 @@ def drawing(screen, wmap, player, zombies, bullets, died):
             pygame.draw.rect(screen, RED, (enemy.x-20, enemy.y+15, 40, 10))
             pygame.draw.rect(screen, GREEN, (enemy.x-20, enemy.y+15, enemy.lives*10, 10))
             # pygame.draw.circle(screen, (0, 200, 100), enemy.pos, 2)
-
-    if player.turn == 'up':
-        player_img = player_with_knife_img_up
-    elif player.turn == 'down':
-        player_img = player_with_knife_img_down
-    elif player.turn == 'left':
-        player_img = player_with_knife_img_left
-    elif player.turn == 'right':
-        player_img = player_with_knife_img_right
+    if player.select_gun == 'knife':
+        if player.turn == 'up':
+            player_img = player_with_knife_img_up
+        elif player.turn == 'down':
+            player_img = player_with_knife_img_down
+        elif player.turn == 'left':
+            player_img = player_with_knife_img_left
+        elif player.turn == 'right':
+            player_img = player_with_knife_img_right
+    elif player.select_gun == 'shotgun':
+        if player.turn == 'up':
+            player_img = player_with_shotgun_img_up
+        elif player.turn == 'down':
+            player_img = player_with_shotgun_img_down
+        elif player.turn == 'left':
+            player_img = player_with_shotgun_img_left
+        elif player.turn == 'right':
+            player_img = player_with_shotgun_img_right
     player_rect = player_img.get_rect(center=player.pos)
     screen.blit(player_img, player_rect)
-    # pygame.draw.circle(screen, (200, 200, 100), player.pos, 2)
 
+    if player.shotgun_fire_is_see < shotgun_fire_is_see:
+        if player.turn == 'up':
+            fire_img = shotgun_fire_image_up
+            fire_rect = fire_img.get_rect(center=(player.pos[0]+10, player.pos[1]-35))
+        elif player.turn == 'down':
+            fire_img = shotgun_fire_image_down
+            fire_rect = fire_img.get_rect(center=(player.pos[0]-8, player.pos[1] + 35))
+        elif player.turn == 'left':
+            fire_img = shotgun_fire_image_left
+            fire_rect = fire_img.get_rect(center=(player.pos[0]- 35, player.pos[1]-10))
+        elif player.turn == 'right':
+            fire_img = shotgun_fire_image_right
+            fire_rect = fire_img.get_rect(center=(player.pos[0] + 35, player.pos[1] + 10))
+        screen.blit(fire_img, fire_rect)
+
+    # pygame.draw.circle(screen, (200, 200, 100), player.pos, 2)
 
     pygame.draw.rect(screen, (140, 140, 140), (800, 0, 100, 800))
 
     for i in range(player.lives):
-        pygame.draw.rect(screen, RED, (WIDTH-100+live_behind_x+live_side*i+live_behind_x*i, live_y, live_side, live_side))
+        pygame.draw.rect(screen, RED,
+                         (WIDTH-100+live_behind_x+live_side*i+live_behind_x*i, live_y, live_side, live_side))
 
     # for enemy in zombies:
     #     pygame.draw.line(screen, RED, (player.x, player.y), (player.x, enemy.y))
