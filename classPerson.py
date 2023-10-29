@@ -16,6 +16,7 @@ class Player:
         self.select_gun = player_start_gun
         self.hit_cooldown = player_hit_knife_cooldown
         self.shotgun_fire_is_see = shotgun_fire_is_see
+        self.shotgun_bullets = shotgun_bullets
 
     @property
     def pos(self):
@@ -126,6 +127,7 @@ class Player:
                     shotgun_sound.play()
                     self.shotgun_fire_is_see = 0
                     self.hit_cooldown = 0
+                    self.shotgun_bullets -= 1
                     for enemy in zombies:
                         # if abs(enemy.x - self.x) < 200 and abs(enemy.y - self.y) < 40:
                         #     enemy.lives -= 2

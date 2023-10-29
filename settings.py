@@ -58,6 +58,24 @@ player_hit_knife_cooldown = 60
 shotgun_fire_is_see = 20
 shotgun_range = 200
 shotgun_range_width = 40
+shotgun_bullets = 100
+
+
+# buttons
+knife_button_x, knife_button_y = (810, 80)
+knife_button_function = 'knife'
+
+shotgun_button_x, shotgun_button_y = (855, 80)
+shotgun_button_function = 'shotgun'
+
+gun_button_x, gun_button_y = (810, 135)
+gun_button_function = 'gun'
+
+rifle_button_x, rifle_button_y = (855, 135)
+rifle_button_function = 'rifle'
+
+button_tile = 80
+
 
 # images
 zombie_img_right = pygame.image.load('images/zombie_attack_0 (3).png')
@@ -75,13 +93,22 @@ player_with_shotgun_img_left = pygame.transform.rotate(player_with_shotgun_img_r
 player_with_shotgun_img_up = pygame.transform.rotate(player_with_shotgun_img_right, 90)
 player_with_shotgun_img_down = pygame.transform.rotate(player_with_shotgun_img_right, 270)
 
-blood_spot_img = pygame.image.load('images/pixil-frame-0 (12).png')
+player_with_gun_img_right = pygame.image.load('images/preview_idle (1).png')
+player_with_gun_img_left = pygame.transform.rotate(player_with_gun_img_right, 180)
+player_with_gun_img_up = pygame.transform.rotate(player_with_gun_img_right, 90)
+player_with_gun_img_down = pygame.transform.rotate(player_with_gun_img_right, 270)
 
 shotgun_fire_image_right = pygame.image.load('images/pixil-frame-0 (13).png')
 shotgun_fire_image_left = pygame.transform.rotate(shotgun_fire_image_right, 180)
 shotgun_fire_image_up = pygame.transform.rotate(shotgun_fire_image_right, 90)
 shotgun_fire_image_down = pygame.transform.rotate(shotgun_fire_image_right, 270)
-# blood_spot_img.set_colorkey((255, 255, 255))
+
+shotgun_icon_img = pygame.image.load('images/free-icon-shotgun-5018824.png')
+rifle_icon_img = pygame.image.load('images/free-icon-rifle-238503.png')
+gun_icon_img = pygame.image.load('images/free-icon-gun-1320476.png')
+knife_icon_img = pygame.image.load('images/free-icon-knife-7661290.png')
+
+blood_spot_img = pygame.image.load('images/pixil-frame-0 (12).png')
 
 
 # sounds
@@ -91,3 +118,6 @@ hit_sound = pygame.mixer.Sound('sounds/tupoy-udar-kirpichom-razdavivishiy-slizny
 knife_miss_sound = pygame.mixer.Sound('sounds/moschnyiy-udar-po-vozduhu.mp3')
 player_wound_sound = pygame.mixer.Sound('sounds/mujskoy-vopl-posle-raneniya.mp3')
 zombie_attack_sound = pygame.mixer.Sound('sounds/udar-priglushennyiy-reshitelnyiy.mp3')
+
+
+buttons_list = [[810, 80, 'knife', knife_icon_img], [810, 180, 'shotgun', shotgun_icon_img], [810, 280, 'gun', gun_icon_img], [810, 380, 'rifle', rifle_icon_img]]

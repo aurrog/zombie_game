@@ -1,7 +1,9 @@
+import pygame.draw
+
 from settings import*
 
 
-def drawing(screen, wmap, player, zombies, bullets, died):
+def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
     screen.fill(BLACK)
     for obj in died:
         screen.blit(blood_spot_img, blood_spot_img.get_rect(center=obj))
@@ -65,6 +67,14 @@ def drawing(screen, wmap, player, zombies, bullets, died):
         pygame.draw.rect(screen, RED,
                          (WIDTH-100+live_behind_x+live_side*i+live_behind_x*i, live_y, live_side, live_side))
 
+    for button in buttons_list:
+        if button[0] < click_pos[0] < button[0]+button_tile and button[1] < click_pos[1] < button[1]+button_tile:
+            player.select_gun = button[2]
+        pygame.draw.rect(screen, BLACK, (button[0], button[1], button_tile, button_tile))
+        icon_rect = button[3].get_rect(center=(button[0]+1/2*button_tile, button[1]+1/2*button_tile))
+        screen.blit(button[3], icon_rect)
+        if player.select_gun == button[2]:
+            pygame.draw.rect(screen, RED, (button[0], button[1], button_tile, button_tile), 4)
     # for enemy in zombies:
     #     pygame.draw.line(screen, RED, (player.x, player.y), (player.x, enemy.y))
     #     pygame.draw.line(screen, GREEN, (player.x, enemy.y), (enemy.x, enemy.y))

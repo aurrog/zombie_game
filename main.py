@@ -13,14 +13,18 @@ bullets = Group()
 player = classPerson.Player(screen, bullets)
 zombies = []
 died = []
-for z in range(5):
+for z in range(10):
     pos = random.choice(zombie_spawn_massive)
     zombies.append(zombie.Zombie(pos[0], pos[1]))
 
 while True:
+    click_pos = (0, 0)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                click_pos = pygame.mouse.get_pos()
 
     player.hit_cooldown += 1
     player.shotgun_fire_is_see += 1
@@ -41,7 +45,7 @@ while True:
             enemy.turn = 'up'
         if enemy.y > enemy_y_last:
             enemy.turn = 'down'
-    drawing.drawing(screen, map.world_map, player, zombies, bullets, died)
+    drawing.drawing(screen, map.world_map, player, zombies, bullets, died, click_pos)
     i = -1
     for z in zombies:
         i += 1
