@@ -26,7 +26,11 @@ while True:
             if event.button == 1:
                 click_pos = pygame.mouse.get_pos()
 
-    player.hit_cooldown += 1
+    player.knife_hit_cooldown += 1
+    player.shotgun_shot_cooldown += 1
+    player.rifle_shot_cooldown += 1
+    player.gun_shot_cooldown += 1
+
     player.shotgun_fire_is_see += 1
     for enemy in zombies:
         enemy.bite_cooldown += 1

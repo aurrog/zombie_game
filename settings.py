@@ -55,10 +55,16 @@ zombie_spawn_massive = [(275, 749), (747, 752), (746, 672), (128, 661), (369, 66
 knife_damage = 4
 knife_radius = 35
 player_hit_knife_cooldown = 60
+
+player_shotgun_shot_cooldown = 60
 shotgun_fire_is_see = 20
 shotgun_range = 200
 shotgun_range_width = 40
 shotgun_bullets = 100
+
+player_rifle_shot_cooldown = 7
+
+player_gun_shot_cooldown = 12
 
 
 # buttons
@@ -98,6 +104,11 @@ player_with_gun_img_left = pygame.transform.rotate(player_with_gun_img_right, 18
 player_with_gun_img_up = pygame.transform.rotate(player_with_gun_img_right, 90)
 player_with_gun_img_down = pygame.transform.rotate(player_with_gun_img_right, 270)
 
+player_with_rifle_img_right = pygame.image.load('images/player_rifle (1).png')
+player_with_rifle_img_left = pygame.transform.rotate(player_with_rifle_img_right, 180)
+player_with_rifle_img_up = pygame.transform.rotate(player_with_rifle_img_right, 90)
+player_with_rifle_img_down = pygame.transform.rotate(player_with_rifle_img_right, 270)
+
 shotgun_fire_image_right = pygame.image.load('images/pixil-frame-0 (13).png')
 shotgun_fire_image_left = pygame.transform.rotate(shotgun_fire_image_right, 180)
 shotgun_fire_image_up = pygame.transform.rotate(shotgun_fire_image_right, 90)
@@ -118,6 +129,8 @@ hit_sound = pygame.mixer.Sound('sounds/tupoy-udar-kirpichom-razdavivishiy-slizny
 knife_miss_sound = pygame.mixer.Sound('sounds/moschnyiy-udar-po-vozduhu.mp3')
 player_wound_sound = pygame.mixer.Sound('sounds/mujskoy-vopl-posle-raneniya.mp3')
 zombie_attack_sound = pygame.mixer.Sound('sounds/udar-priglushennyiy-reshitelnyiy.mp3')
+rifle_shot_sound = pygame.mixer.Sound('sounds/vyistrelyi-iz-avtomata-i-perezaryadka (mp3cut.net).mp3')
+gun_shot_sound = pygame.mixer.Sound('sounds/shumnyiy-odinochnyiy-vyistrel.mp3')
 
 
 buttons_list = [[810, 80, 'knife', knife_icon_img], [810, 180, 'shotgun', shotgun_icon_img], [810, 280, 'gun', gun_icon_img], [810, 380, 'rifle', rifle_icon_img]]

@@ -1,5 +1,4 @@
-import pygame.draw
-
+# import pygame.draw
 from settings import*
 
 
@@ -22,7 +21,6 @@ def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
             screen.blit(zombie_img, zombie_rect)
             pygame.draw.rect(screen, RED, (enemy.x-20, enemy.y+15, 40, 10))
             pygame.draw.rect(screen, GREEN, (enemy.x-20, enemy.y+15, enemy.lives*10, 10))
-            # pygame.draw.circle(screen, (0, 200, 100), enemy.pos, 2)
     if player.select_gun == 'knife':
         if player.turn == 'up':
             player_img = player_with_knife_img_up
@@ -41,6 +39,24 @@ def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
             player_img = player_with_shotgun_img_left
         elif player.turn == 'right':
             player_img = player_with_shotgun_img_right
+    elif player.select_gun == 'gun':
+        if player.turn == 'up':
+            player_img = player_with_gun_img_up
+        elif player.turn == 'down':
+            player_img = player_with_gun_img_down
+        elif player.turn == 'left':
+            player_img = player_with_gun_img_left
+        elif player.turn == 'right':
+            player_img = player_with_gun_img_right
+    elif player.select_gun == 'rifle':
+        if player.turn == 'up':
+            player_img = player_with_rifle_img_up
+        elif player.turn == 'down':
+            player_img = player_with_rifle_img_down
+        elif player.turn == 'left':
+            player_img = player_with_rifle_img_left
+        elif player.turn == 'right':
+            player_img = player_with_rifle_img_right
     player_rect = player_img.get_rect(center=player.pos)
     screen.blit(player_img, player_rect)
 
@@ -58,8 +74,6 @@ def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
             fire_img = shotgun_fire_image_right
             fire_rect = fire_img.get_rect(center=(player.pos[0] + 35, player.pos[1] + 10))
         screen.blit(fire_img, fire_rect)
-
-    # pygame.draw.circle(screen, (200, 200, 100), player.pos, 2)
 
     pygame.draw.rect(screen, (140, 140, 140), (800, 0, 100, 800))
 

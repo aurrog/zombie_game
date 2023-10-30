@@ -14,7 +14,10 @@ class Player:
         self.side = player_side
         self.rect = pygame.Rect(self.x, self.y, self.side, self.side)
         self.select_gun = player_start_gun
-        self.hit_cooldown = player_hit_knife_cooldown
+        self.knife_hit_cooldown = player_hit_knife_cooldown
+        self.shotgun_shot_cooldown = player_shotgun_shot_cooldown
+        self.rifle_shot_cooldown = player_rifle_shot_cooldown
+        self.gun_shot_cooldown = player_gun_shot_cooldown
         self.shotgun_fire_is_see = shotgun_fire_is_see
         self.shotgun_bullets = shotgun_bullets
 
@@ -24,7 +27,7 @@ class Player:
 
     @property
     def pos_square(self):
-        return self.x//TILE, self.y//TILE
+        return self.x // TILE, self.y // TILE
 
     def detect_collisions(self, dx, dy):
         # print(1)
@@ -112,9 +115,9 @@ class Player:
         keys = pygame.key.get_pressed()
         lives = [e.lives for e in zombies]
         if keys[pygame.K_SPACE]:
-            if self.hit_cooldown >= player_hit_knife_cooldown:
-                self.hit_cooldown = 0
-                if self.select_gun == 'knife':
+            if self.select_gun == 'knife':
+                if self.knife_hit_cooldown >= player_hit_knife_cooldown:
+                    self.knife_hit_cooldown = 0
                     for enemy in zombies:
                         if abs(enemy.x - self.x) < knife_radius and abs(enemy.y - self.y) < knife_radius:
                             hit_sound.play()
@@ -123,10 +126,11 @@ class Player:
                     lives2 = [e.lives for e in zombies]
                     if lives == lives2:
                         knife_miss_sound.play()
-                if self.select_gun == 'shotgun':
+            if self.select_gun == 'shotgun':
+                if self.shotgun_shot_cooldown >= player_shotgun_shot_cooldown:
+                    self.shotgun_shot_cooldown = 0
                     shotgun_sound.play()
                     self.shotgun_fire_is_see = 0
-                    self.hit_cooldown = 0
                     self.shotgun_bullets -= 1
                     for enemy in zombies:
                         # if abs(enemy.x - self.x) < 200 and abs(enemy.y - self.y) < 40:
@@ -143,6 +147,15 @@ class Player:
                         elif self.turn == 'down':
                             if abs(enemy.x - self.x) < shotgun_range_width and 0 < enemy.y - self.y < shotgun_range:
                                 enemy.lives -= 2
+            if self.select_gun == 'rifle':
+                if self.rifle_shot_cooldown >= player_rifle_shot_cooldown:
+                    self.rifle_shot_cooldown = 0
+                    rifle_shot_sound.play()
+
+            if self.select_gun == 'gun':
+                if self.gun_shot_cooldown >= player_gun_shot_cooldown:
+                    self.gun_shot_cooldown = 0
+                    gun_shot_sound.play()
 
         return zombies
 
