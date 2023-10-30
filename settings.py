@@ -131,6 +131,7 @@ player_wound_sound = pygame.mixer.Sound('sounds/mujskoy-vopl-posle-raneniya.mp3'
 zombie_attack_sound = pygame.mixer.Sound('sounds/udar-priglushennyiy-reshitelnyiy.mp3')
 rifle_shot_sound = pygame.mixer.Sound('sounds/vyistrelyi-iz-avtomata-i-perezaryadka (mp3cut.net).mp3')
 gun_shot_sound = pygame.mixer.Sound('sounds/shumnyiy-odinochnyiy-vyistrel.mp3')
+no_bullets_sound = pygame.mixer.Sound('sounds/gundryfiresnglvar-pe1096505332.mp3')
 
 
 buttons_list = [[810, 80, 'knife', knife_icon_img], [810, 180, 'shotgun', shotgun_icon_img], [810, 280, 'gun', gun_icon_img], [810, 380, 'rifle', rifle_icon_img]]
