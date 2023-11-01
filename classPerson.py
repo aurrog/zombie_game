@@ -57,6 +57,13 @@ class Player:
         self.x += dx
         self.y += dy
 
+    def detect_bullets_collision(self, rect, walls, dx, dy):
+        next_rect = rect.copy()
+        next_rect.move_ip(dx, dy)
+        hit_indexes = next_rect.collidelistall(map.collision_walls)
+        if len(hit_indexes):
+            return 1
+
     def bullets_collision(self, walls):
         collision_walls = pygame.sprite.groupcollide(self.bullets, walls, True, True)
         if collision_walls:
