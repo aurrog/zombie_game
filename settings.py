@@ -33,7 +33,7 @@ rows = 40
 
 # player
 player_lives = 3
-player_speed = 2
+player_speed = 5
 player_start_position = 100, 750
 player_start_turn = 'up'
 player_side = 15
@@ -63,6 +63,9 @@ shotgun_range_width = 40
 shotgun_bullets = 100
 
 player_rifle_shot_cooldown = 7
+rifle_range = WIDTH
+rifle_range_width = 30
+rifle_damage = 1
 
 player_gun_shot_cooldown = 12
 

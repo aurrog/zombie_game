@@ -76,6 +76,7 @@ def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
         screen.blit(fire_img, fire_rect)
 
     pygame.draw.rect(screen, (140, 140, 140), (800, 0, 100, 800))
+    pygame.draw.line(screen, RED, player.pos, (player.pos[0]-shotgun_range, player.pos[1]))
 
     for i in range(player.lives):
         pygame.draw.rect(screen, RED,
@@ -104,5 +105,5 @@ def drawing(screen, wmap, player, zombies, bullets, died, click_pos):
         elif bullet.rect.x >= WIDTH:
             bullets.remove(bullet)
     bullets.update()
-    player.draw_bullets()
+    # player.draw_bullets()
     pygame.display.update()

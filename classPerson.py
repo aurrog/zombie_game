@@ -1,3 +1,5 @@
+import pygame
+
 import map
 from settings import *
 from bullet import Bullet
@@ -57,17 +59,17 @@ class Player:
         self.x += dx
         self.y += dy
 
-    def detect_bullets_collision(self, rect, walls, dx, dy):
+    def detect_bullets_collision(self, rect, dx, dy):
         next_rect = rect.copy()
         next_rect.move_ip(dx, dy)
         hit_indexes = next_rect.collidelistall(map.collision_walls)
         if len(hit_indexes):
-            return 1
-
-    def bullets_collision(self, walls):
-        collision_walls = pygame.sprite.groupcollide(self.bullets, walls, True, True)
-        if collision_walls:
-            return 1
+            print(1)
+            return True
+    # def bullets_collision(self, walls):
+    #     collision_walls = pygame.sprite.groupcollide(self.bullets, walls, True, True)
+    #     if collision_walls:
+    #         return 1
 
     # def attack(self, zombie):
     #     if self.select_gun == 'knife':
@@ -140,24 +142,63 @@ class Player:
                     self.shotgun_fire_is_see = 0
                     self.shotgun_bullets -= 1
                     for enemy in zombies:
+                        bullet_rect = pygame.Rect(self.x, self.y, shotgun_range_width, shotgun_range_width)
+                        bullet_dx, bullet_dy = 0, 0
                         # if abs(enemy.x - self.x) < 200 and abs(enemy.y - self.y) < 40:
                         #     enemy.lives -= 2
                         if self.turn == 'left':
                             if 0 < self.x - enemy.x < shotgun_range and abs(enemy.y - self.y) < shotgun_range_width:
-                                enemy.lives -= 2
+                                for i in range(abs(self.x - enemy.x)):
+                                    bullet_dx -= 1
+                                    bullet_dy += 0
+                                    if not self.detect_bullets_collision(bullet_rect, bullet_dx, bullet_dy):
+                                        enemy.lives -= 2
+                                        print(2)
+                                        break
                         elif self.turn == 'right':
                             if 0 < enemy.x - self.x < shotgun_range and abs(enemy.y - self.y) < shotgun_range_width:
-                                enemy.lives -= 2
+                                for i in range(abs(self.x - enemy.x)):
+                                    bullet_dx += 1
+                                    bullet_dy += 0
+                                    if not self.detect_bullets_collision(bullet_rect, bullet_dx, bullet_dy):
+                                        enemy.lives -= 2
+                                        print(2)
+                                        break
                         elif self.turn == 'up':
                             if abs(enemy.x - self.x) < shotgun_range_width and 0 < self.y - enemy.y < shotgun_range:
-                                enemy.lives -= 2
+                                for i in range(abs(self.x - enemy.x)):
+                                    bullet_dx += 0
+                                    bullet_dy -= 1
+                                    if not self.detect_bullets_collision(bullet_rect, bullet_dx, bullet_dy):
+                                        enemy.lives -= 2
+                                        print(2)
+                                        break
                         elif self.turn == 'down':
                             if abs(enemy.x - self.x) < shotgun_range_width and 0 < enemy.y - self.y < shotgun_range:
-                                enemy.lives -= 2
+                                for i in range(abs(self.x - enemy.x)):
+                                    bullet_dx += 0
+                                    bullet_dy += 1
+                                    if not self.detect_bullets_collision(bullet_rect, bullet_dx, bullet_dy):
+                                        enemy.lives -= 2
+                                        print(2)
+                                        break
             if self.select_gun == 'rifle':
                 if self.rifle_shot_cooldown >= player_rifle_shot_cooldown:
                     self.rifle_shot_cooldown = 0
                     rifle_shot_sound.play()
+                    for enemy in zombies:
+                        if self.turn == 'left':
+                            if 0 < self.x - enemy.x < rifle_range and abs(enemy.y - self.y) < rifle_range_width:
+                                enemy.lives -= rifle_damage
+                        elif self.turn == 'right':
+                            if 0 < enemy.x - self.x < rifle_range and abs(enemy.y - self.y) < rifle_range_width:
+                                enemy.lives -= rifle_damage
+                        elif self.turn == 'up':
+                            if abs(enemy.x - self.x) < rifle_range_width and 0 < self.y - enemy.y < rifle_range:
+                                enemy.lives -= rifle_damage
+                        elif self.turn == 'down':
+                            if abs(enemy.x - self.x) < rifle_range_width and 0 < enemy.y - self.y < rifle_range:
+                                enemy.lives -= rifle_damage
 
             if self.select_gun == 'gun':
                 if self.gun_shot_cooldown >= player_gun_shot_cooldown:
@@ -166,7 +207,7 @@ class Player:
 
         return zombies
 
-    def draw_bullets(self):
-        for bullet in self.bullets.sprites():
-            # self.bullet_collision(walls, bullet.rect[0], bullet.rect[1])
-            bullet.draw_bullet()
+    # def draw_bullets(self):
+    #     for bullet in self.bullets.sprites():
+    #         # self.bullet_collision(walls, bullet.rect[0], bullet.rect[1])
+    #         bullet.draw_bullet()
